@@ -7,6 +7,7 @@
   <meta name="description" content="What needs to work better? Bring us the problem. We'll find the solution. MNI · Muhammad Naveed Ishaque · Solution Provider · Longford Work Hub, Ireland · Barcelona, Spain · Remote." />
   <meta name="theme-color" content="#101411" />
   <link rel="canonical" href="https://mni.detleng.com/" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <meta property="og:title" content="MNI · Solution Provider" />
   <meta property="og:description" content="Bring us the problem. We'll find the solution." />
   <meta property="og:type" content="website" />
@@ -218,7 +219,41 @@
   hs?.addEventListener('pointermove',e=>{const r=hs.getBoundingClientRect();hs.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');hs.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%')});
 
   const form=document.getElementById('problemForm'), status=document.getElementById('formStatus');
-  form?.addEventListener('submit',e=>{e.preventDefault();status.textContent='The Problem Desk is ready — connect your chosen email/form endpoint before launch.';});
+
+form?.addEventListener('submit',e=>{
+  e.preventDefault();
+
+  if(!form.reportValidity()) return;
+
+  const data=new FormData(form);
+
+  const name=(data.get('name')||'').toString().trim();
+  const email=(data.get('email')||'').toString().trim();
+  const problem=(data.get('problem')||'').toString().trim();
+  const outcome=(data.get('outcome')||'').toString().trim();
+
+  const subject=`MNI Problem Desk — ${name}`;
+
+  const body=[
+    'MNI — The Problem Desk',
+    '',
+    `Name: ${name}`,
+    `Email: ${email}`,
+    '',
+    'WHAT IS THE PROBLEM?',
+    problem,
+    '',
+    'WHAT WOULD YOU LIKE TO WORK BETTER?',
+    outcome || 'Not specified',
+    '',
+    `Submitted from: ${window.location.href}`
+  ].join('\n');
+
+  status.textContent='Opening your email app with the Problem Desk message ready to send…';
+
+  window.location.href=
+    `mailto:info@detleng.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+});
   document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body>
