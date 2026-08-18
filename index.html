@@ -62,7 +62,7 @@
 
     /* ABOUT / DESK */
     .about{background:var(--paper)}.about-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:100px}.about-role{margin-top:16px;color:var(--ember-dark);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.16em}.about-copy{font-size:19px;color:var(--muted);padding-top:30px}.about-copy .lead{font-family:Georgia,serif;color:var(--ink);font-size:34px;line-height:1.2}.about-copy strong{color:var(--ink)}
-    .desk{background:var(--ember);color:var(--white);overflow:hidden}.desk::before{content:"PROBLEM";position:absolute;right:-5vw;top:50%;transform:translateY(-50%) rotate(90deg);font-family:Georgia,serif;font-size:15vw;color:rgba(255,255,255,.055);letter-spacing:-.07em}.desk-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:75px;align-items:start}.desk .kicker{color:rgba(255,255,255,.75)}.desk-copy p{font-size:18px;color:rgba(255,255,255,.75)}.desk-points{margin-top:30px;border-top:1px solid rgba(255,255,255,.24)}.desk-points div{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.24);font-size:13px}.form-card{background:var(--paper-3);color:var(--ink);padding:34px;border-radius:30px;box-shadow:0 35px 90px rgba(92,31,18,.22)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:block;margin-bottom:17px}.field span{display:block;font-size:12px;font-weight:800;margin:0 0 7px}.field input,.field textarea{width:100%;border:1px solid var(--line);background:var(--white);border-radius:14px;padding:14px 15px;outline:none;color:var(--ink);resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--ember);box-shadow:0 0 0 3px rgba(221,104,74,.11)}.submit{width:100%;border:0;cursor:pointer}.form-note{text-align:center;font-size:11px;color:var(--muted);margin:11px 0 0}.form-status{min-height:19px;margin:10px 0 0;font-size:12px;color:var(--ember-dark);text-align:center}
+    .desk{background:var(--ember);color:var(--white);overflow:hidden}.desk::before{content:"PROBLEM";position:absolute;right:-5vw;top:50%;transform:translateY(-50%) rotate(90deg);font-family:Georgia,serif;font-size:15vw;color:rgba(255,255,255,.055);letter-spacing:-.07em;pointer-events:none}.desk-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:75px;align-items:start}.desk .kicker{color:rgba(255,255,255,.75)}.desk-copy p{font-size:18px;color:rgba(255,255,255,.75)}.desk-points{margin-top:30px;border-top:1px solid rgba(255,255,255,.24)}.desk-points div{padding:13px 0;border-bottom:1px solid rgba(255,255,255,.24);font-size:13px}.form-card{background:var(--paper-3);color:var(--ink);padding:34px;border-radius:30px;box-shadow:0 35px 90px rgba(92,31,18,.22)}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:block;margin-bottom:17px}.field span{display:block;font-size:12px;font-weight:800;margin:0 0 7px}.field input,.field textarea{width:100%;border:1px solid var(--line);background:var(--white);border-radius:14px;padding:14px 15px;outline:none;color:var(--ink);resize:vertical}.field input:focus,.field textarea:focus{border-color:var(--ember);box-shadow:0 0 0 3px rgba(221,104,74,.11)}.submit{width:100%;border:0;cursor:pointer}.form-note{text-align:center;font-size:11px;color:var(--muted);margin:11px 0 0}.form-status{min-height:19px;margin:10px 0 0;font-size:12px;color:var(--ember-dark);text-align:center}
 
     .final{background:var(--paper);text-align:center;padding:110px 0}.final p{margin:0;color:var(--muted)}.final h2{font-family:Georgia,serif;font-size:clamp(58px,8vw,110px);line-height:.88;letter-spacing:-.065em;font-weight:500;margin:12px 0 28px}.final h2 em{color:var(--ember);font-weight:500}.final .button{min-height:58px;padding-inline:28px}
     footer{background:var(--ink);color:rgba(255,255,255,.6);padding:54px 0 28px}.footer-grid{display:grid;grid-template-columns:1.35fr .9fr .8fr 1fr;gap:42px}.footer-brand{font-size:34px;color:var(--white);font-weight:950;letter-spacing:-.07em}.footer-tag{color:var(--white);max-width:300px}.footer-label{font-size:10px;text-transform:uppercase;letter-spacing:.15em;color:var(--lime);font-weight:900}.footer-links{display:flex;flex-direction:column;gap:8px}.footer-links a{text-decoration:none;color:inherit}.footer-links a:hover{color:var(--white)}.footer-end{font-size:11px;text-align:right;display:flex;flex-direction:column;justify-content:space-between;gap:25px}.footer-end strong{color:var(--white)}
@@ -219,41 +219,35 @@
   hs?.addEventListener('pointermove',e=>{const r=hs.getBoundingClientRect();hs.style.setProperty('--mx',((e.clientX-r.left)/r.width*100)+'%');hs.style.setProperty('--my',((e.clientY-r.top)/r.height*100)+'%')});
 
   const form=document.getElementById('problemForm'), status=document.getElementById('formStatus');
+  form?.addEventListener('submit',e=>{
+    e.preventDefault();
+    if(!form.reportValidity()) return;
 
-form?.addEventListener('submit',e=>{
-  e.preventDefault();
+    const data=new FormData(form);
+    const name=(data.get('name')||'').toString().trim();
+    const email=(data.get('email')||'').toString().trim();
+    const problem=(data.get('problem')||'').toString().trim();
+    const outcome=(data.get('outcome')||'').toString().trim();
 
-  if(!form.reportValidity()) return;
+    const subject=`${email} — Send you His problem for Solution`;
+    const body=[
+      'MNI — The Problem Desk',
+      '',
+      `Name: ${name}`,
+      `Email: ${email}`,
+      '',
+      'WHAT IS THE PROBLEM?',
+      problem,
+      '',
+      'WHAT WOULD YOU LIKE TO WORK BETTER?',
+      outcome || 'Not specified',
+      '',
+      `Submitted from: ${window.location.href}`
+    ].join('\n');
 
-  const data=new FormData(form);
-
-  const name=(data.get('name')||'').toString().trim();
-  const email=(data.get('email')||'').toString().trim();
-  const problem=(data.get('problem')||'').toString().trim();
-  const outcome=(data.get('outcome')||'').toString().trim();
-
-  const subject=`MNI Problem Desk — ${name}`;
-
-  const body=[
-    'MNI — The Problem Desk',
-    '',
-    `Name: ${name}`,
-    `Email: ${email}`,
-    '',
-    'WHAT IS THE PROBLEM?',
-    problem,
-    '',
-    'WHAT WOULD YOU LIKE TO WORK BETTER?',
-    outcome || 'Not specified',
-    '',
-    `Submitted from: ${window.location.href}`
-  ].join('\n');
-
-  status.textContent='Opening your email app with the Problem Desk message ready to send…';
-
-  window.location.href=
-    `mailto:info@detleng.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-});
+    status.textContent='Opening your email app with the Problem Desk message ready to send…';
+    window.location.href=`mailto:info@detleng.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
   document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body>
