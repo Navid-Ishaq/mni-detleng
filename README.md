@@ -21,3 +21,6 @@ No commit, push or deployment was performed by the coding agent. Upload the chan
 
 ## Evidence boundaries
 Background and language details come from the owner-supplied V8 portfolio. Project status and tool familiarity are not independently certified qualifications. The locked portfolio originals were not modified. The initial local website was backed up outside this public folder in the Codex task workspace.
+
+## Academic transcript popup
+The education section includes an accessible native dialog with the owner-approved transcript image (`academic-transcript.png`), zoom/fit controls, full-image link, Escape/Close dismissal and focus restoration. Original visible identifiers are retained at the owner's explicit request. The text remains “Partial studies — degree not completed.” Publish the PNG along with `index.html`, `styles.css` and `app.js`. No original portfolio document was changed.
