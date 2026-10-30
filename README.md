@@ -24,3 +24,6 @@ Background and language details come from the owner-supplied V8 portfolio. Proje
 
 ## Academic transcript popup
 The education section includes an accessible native dialog with the owner-approved transcript image (`academic-transcript.png`), zoom/fit controls, full-image link, Escape/Close dismissal and focus restoration. Original visible identifiers are retained at the owner's explicit request. The text remains “Partial studies — degree not completed.” Publish the PNG along with `index.html`, `styles.css` and `app.js`. No original portfolio document was changed.
+
+## Modern footer refinement
+Four clear desktop columns: personal identity, MNI navigation, the three ecosystem links in the agreed order, and contact/remote collaboration details. Two columns on medium screens and one column on mobile. Direct Automation Desk contact is retained. No login or product-specific privacy claims were added to the personal website.
